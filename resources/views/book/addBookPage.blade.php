@@ -75,7 +75,7 @@
                             {{--</div>--}}
 
                             <div class="am-u-sm-9">
-                                <select data-am-selected="{btnSize: 'sm'}" name="genre" onchange="window.location=this.value">
+                                <select data-am-selected="{btnSize: 'sm'}" name="genre" >
                                     @foreach($genre as $g)
                                         <option>{{$g->genre}}</option>
                                     @endforeach

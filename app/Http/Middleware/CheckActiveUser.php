@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-class CheckUserType
+class CheckActiveUser
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,7 @@ class CheckUserType
      */
     public function handle($request, Closure $next)
     {
-        $user_type = Auth::user()->user_type;
-        if($user_type=='Member'){
-            return redirect('/noPermission');
-        }
+//        DB::select('select count()')
         return $next($request);
     }
 }

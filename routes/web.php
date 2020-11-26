@@ -32,24 +32,30 @@ Route::get('/user/reviews','IndexController@reviews');
 //book
 
 Route::get('/book/bookDetail/{id}', 'BookController@bookDetailPage');
-Route::get('/book/addBookPage', 'BookController@goToAddBookPage')->middleware('member');
-Route::post('/book/addBook', 'BookController@store')->middleware('member');
-Route::get('/book/editBookPage/{id}', 'BookController@goToEditBookPage')->middleware('member');
-Route::post('/book/editBook', 'BookController@editBook')->middleware('member');
-Route::get('/book/delete/{id}','BookController@delete')->middleware('member');
+Route::get('/book/addBookPage', 'BookController@goToAddBookPage')->middleware('guestUser')->middleware('curator');
+Route::post('/book/addBook', 'BookController@store')->middleware('guestUser')->middleware('curator');
+Route::get('/book/editBookPage/{id}', 'BookController@goToEditBookPage')->middleware('guestUser')->middleware('member');
+Route::post('/book/editBook', 'BookController@editBook')->middleware('guestUser')->middleware('member');
+Route::get('/book/delete/{id}','BookController@delete')->middleware('guestUser')->middleware('member')->middleware('curator');
 Route::post('/book/uploadImage','BookController@upload');
 Route::get('/book/highRatingBook','BookController@highRatingBook');
-
+Route::get('/book/bookRecommendation','BookController@bookRecommendation');
 //review
-Route::get('/review/addReviewPage/{id}', 'ReviewController@goToAddReviewPage')->middleware('member');
-Route::post('/review/addReview', 'ReviewController@store')->middleware('member');
-Route::get('/review/editReviewPage/{id}', 'ReviewController@goToEditReviewPage')->middleware('member');
-Route::post('/review/editReview', 'ReviewController@editReview')->middleware('member');
+Route::get('/review/addReviewPage/{id}', 'ReviewController@goToAddReviewPage')->middleware('guestUser');
+Route::post('/review/addReview', 'ReviewController@store')->middleware('guestUser');
+Route::get('/review/editReviewPage/{id}', 'ReviewController@goToEditReviewPage')->middleware('guestUser');
+Route::post('/review/editReview', 'ReviewController@editReview')->middleware('guestUser');
 
-
-//admin user list
+//admin
 Route::get('/admin/userList','AdminController@userList');
 Route::get('/admin/approveUser/{user_id}','AdminController@approveUser');
+Route::get("/admin/addAuthorPage",'AdminController@addAuthorPage')->middleware('guestUser')->middleware('member')->middleware('curator');
+Route::post("/admin/addAuthor",'AdminController@addAuthor');
 
 //permisson
 Route::get('/noPermission','IndexController@permission');
+
+
+//du li zhan
+
+Route::get('/duli/flow','DuLiController@flow');

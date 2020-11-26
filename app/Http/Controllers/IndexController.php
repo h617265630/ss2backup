@@ -52,6 +52,8 @@ class IndexController extends Controller
         $bookNameList = [];
         foreach($reviews as $key=>$r){
             $book = Book::where('id',$r['book_id'])->get()[0];
+//            dd($book);
+//            echo($book);
             $bookname = $book['title'];
             $bookNameList[] = $bookname;
             $r['bookName'] = $bookNameList[$key];
@@ -68,9 +70,10 @@ class IndexController extends Controller
         //and year
         $param = $request->all()['search'];
         $book = Book::where('title','like',$param)->orWhere('Author','like',$param)
-            ->orWhere('genre','like',$param)->orWhere('published_year','like',$param)->get();
-
+            ->orWhere('genre','like',$param)->orWhere('published_year','like',$param)->paginate(5);
+//        dd($book);
         $genre = DB::select('select distinct genre from book');
+//        dd($book.isEmpty());
         return view('index',['book'=>$book,'genre'=>$genre]);
     }
 

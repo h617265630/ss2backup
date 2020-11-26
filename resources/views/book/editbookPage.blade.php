@@ -14,19 +14,19 @@
                             <div class="am-panel-bd">
                                 <div class="am-g">
                                     <div class="am-u-md-4">
-                                        <img class="am-img-circle am-img-thumbnail" src="" alt=""/>
-                                        <input type="hidden" name="profile_address" value="none">
+                                        {{--<img class="am-img-circle am-img-thumbnail" src="" alt=""/>--}}
+                                        {{--<input type="hidden" name="profile_address" value="none">--}}
                                     </div>
                                     <div class="am-u-md-8">
-                                        <p>你可以使用<a href="#">gravatar.com</a>提供的头像或者使用本地上传头像。 </p>
-                                        <form class="am-form">
-                                            <div class="am-form-group">
-                                                <input type="file" id="user-pic">
+                                        {{--<p>你可以使用<a href="#">gravatar.com</a>提供的头像或者使用本地上传头像。 </p>--}}
+                                        {{--<form class="am-form">--}}
+                                            {{--<div class="am-form-group">--}}
+                                                {{--<input type="file" id="user-pic">--}}
 
-                                                <p class="am-form-help">请选择要上传的文件...</p>
-                                                <button type="button" class="am-btn am-btn-primary am-btn-xs">保存</button>
-                                            </div>
-                                        </form>
+                                                {{--<p class="am-form-help">请选择要上传的文件...</p>--}}
+                                                {{--<button type="button" class="am-btn am-btn-primary am-btn-xs">保存</button>--}}
+                                            {{--</div>--}}
+                                        {{--</form>--}}
                                     </div>
                                 </div>
                             </div>

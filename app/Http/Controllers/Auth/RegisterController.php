@@ -66,7 +66,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        dd('test');
+        //dd('test');
         if($data['user_type']=='Curator'){
             $status = 'unApproved';
         }else{

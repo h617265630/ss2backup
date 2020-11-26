@@ -40,6 +40,7 @@ class LoginController extends Controller
     }
 
 
+
     /**
      * Log out function
      * @return  home page

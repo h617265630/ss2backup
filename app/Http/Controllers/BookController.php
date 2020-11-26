@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Book;
 use App\Review;
 use App\User;
+use App\Author;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use DB;
 class BookController extends Controller
@@ -53,8 +55,16 @@ class BookController extends Controller
         $book = Book::find($id);
         foreach($reviews as $key=>$r){
             $user = User::where('id',$r['user_id'])->get()[0]['name'];
+//            dd($user);
             $r['userName'] = $user;
         }
+//        $author = [];
+//        $re = explode(',',$book['author']);
+//        foreach($re as $r){
+//            $a = Author::where('book_name',$r)->get();
+//            $author = $a;
+//        }
+//        dd($author);
         return view('book.bookDetailPage',['book'=>$book,'reviews'=>$reviews]);
 
 
@@ -151,7 +161,7 @@ class BookController extends Controller
             $book->genre = $param['genre'];
             $book->published_year = $param['p_year'];
             $book->author = $param['author'];
-            $book->profile_address = $param['profile_address'];
+//            $book->profile_address = $param['profile_address'];
             $book->save();
             return redirect('/');
         }
@@ -162,6 +172,33 @@ class BookController extends Controller
     public function delete($id){
         $book = Book::find($id);
         $book->delete();
+
+//        $user_id = Auth::id();
+        $reviews = Review::where('book_id',$id)->get();
+        foreach($reviews as $key=>$r){
+            $r->delete();
+        }
         return back();
     }
+    /*
+     *
+     *book recommendation
+     */
+
+    public function bookRecommendation(){
+
+        $user_id = Auth::id();
+        $query = 'select b.* ,v.rating from review v, book b where b.id=v.book_id and rating>2 and length(v.content)>5 group by b.id';
+        $query2 = 'select b.* ,v.rating from review v, book b where b.id=v.book_id and rating>1 and length(v.content)>2 and v.user_id =? group by b.id';
+//        $book = Book::all()->join(Review::all());
+//        dd($book);
+        $book = DB::select($query);
+        $book_user_like = DB::select($query2,[$user_id]);
+
+
+        $r = array_merge($book,$book_user_like);
+//        dd($r);
+        return view('book.recommendation',['book'=>$r]);
+    }
 }
+

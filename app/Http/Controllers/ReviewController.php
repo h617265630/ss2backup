@@ -40,6 +40,8 @@ class ReviewController extends Controller
     public function store(Request $request){
         $param=$request->all();
         $user_id = Auth::id();
+
+
         $validator = Validator::make($param,[
             'content' => 'required|string|min:5',
             'rating' => 'required|numeric|between:1,5',
@@ -47,15 +49,19 @@ class ReviewController extends Controller
         if($validator->fails()){
             return redirect('/review/addReviewPage/'.$param['book_id'])->withErrors($validator)->withInput();
         }else{
-            $review = new Review();
-            $review->content = $param['content'];
-            $review->rating = $param['rating'];
-            $review->book_id = $param['book_id'];
-            $review->user_id = $user_id;
-            $review->save();
-            return redirect('/book/bookDetail/'.$param['book_id']);
+            $review = Review::where('user_id',$user_id)->where('book_id',$param['book_id'])->get();
+            if($review->isEmpty()){
+                $review = new Review();
+                $review->content = $param['content'];
+                $review->rating = $param['rating'];
+                $review->book_id = $param['book_id'];
+                $review->user_id = $user_id;
+                $review->save();
+                return redirect('/book/bookDetail/'.$param['book_id']);
+            }else{
+                return back()->withErrors('the same user can only write one review for the same book');
+            };
         }
-
     }
     /**
      * edit review page

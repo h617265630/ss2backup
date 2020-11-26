@@ -35,6 +35,15 @@
                     </a>
                     <ul class="nav navbar-nav navbar-left">
                         <li><a class="" href="{{url('/book/highRatingBook')}}"><strong>High rating book</strong></a></li>
+                        <li><a class="" href="{{url('/book/bookRecommendation')}}"><strong>Book Recommendation</strong></a></li>
+                        @if(Auth::guest())
+
+                        @elseif(Auth::user()->user_type=='Curator')
+
+                        @else
+                             <li><a class="" href="{{url('/admin/addAuthorPage')}}"><strong>Add Author</strong></a></li>
+                        @endif
+                        <li><a class="" href="{{url('/duli/flow')}}">独立站flow</a></li>
                     </ul>
 
                 </div>
@@ -77,7 +86,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     @if(Auth::user()->status !='Approved')
-                                        <strong style="color:pink">UnApproved</strong>  <strong style="color:deepskyblue">{{ Auth::user()->name }}</strong><span class="caret"></span>
+                                        <strong style="color:pink">UnApproved</strong>  <span>{{Auth::user()->user_type}}</span><strong style="color:deepskyblue">{{ Auth::user()->name }}</strong><span class="caret"></span>
                                     @else
                                         <span>{{Auth::user()->user_type}}</span> <strong style="color:deepskyblue">{{ Auth::user()->name }}</strong><span class="caret"></span>
                                     @endif
